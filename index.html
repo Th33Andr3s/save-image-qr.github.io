@@ -76,7 +76,10 @@
 
     cameraBtn.addEventListener('click', async () => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { exact: "environment" } }, // Esto pide la trasera
+        audio: false
+      });
         video.srcObject = stream;
         video.style.display = 'block';
 
