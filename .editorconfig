@@ -1,0 +1,72 @@
+root = true
+
+# Configuración por defecto para todos los archivos
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Archivos JavaScript y Node.js (backend)
+[*.{js,mjs,cjs}]
+indent_style = space
+indent_size = 4
+quote_type = single
+
+# Archivos JSON
+[*.json]
+indent_style = space
+indent_size = 2
+
+# package.json específico
+[package.json]
+indent_style = space
+indent_size = 2
+
+# Archivos HTML
+[*.{html,htm}]
+indent_style = space
+indent_size = 2
+quote_type = double
+max_line_length = 120
+
+# Archivos CSS y preprocesadores
+[*.{css,scss,sass,less}]
+indent_style = space
+indent_size = 2
+quote_type = single
+max_line_length = 120
+
+# Archivos TypeScript (por si los usas en el futuro)
+[*.{ts,tsx}]
+indent_style = space
+indent_size = 4
+quote_type = single
+
+# Archivos de configuración YAML
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# Archivos Markdown
+[*.md]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Archivos de configuración de proyecto
+[{.eslintrc,.babelrc,.stylelintrc,*.config.js}]
+indent_style = space
+indent_size = 2
+
+# Dockerfiles
+[{Dockerfile,Dockerfile.*}]
+indent_style = space
+indent_size = 4
+
+# Archivos de entorno
+[.env*]
+indent_style = space
+indent_size = 2
+insert_final_newline = false
