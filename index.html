@@ -392,7 +392,6 @@
       width: 350px !important;
       padding: 30px !important;
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3) !important;
-      inset: 0 1px 0 rgba(255, 255, 255, 0.8) !important;
       border: 1px solid rgba(255, 255, 255, 0.5) !important;
       font-family: 'Poppins', sans-serif !important;
       position: relative !important;
@@ -800,6 +799,7 @@
         title: `${icons[type] || ''} ${title}`,
         text: text,
         icon: type,
+        position: 'center', // SIEMPRE CENTRADO
         ...options
       };
 
@@ -812,10 +812,18 @@
         config.padding = '25px';
       }
       
-      // FORZAR POSICIÓN CENTRO SIEMPRE
-      config.position = 'center';
-      delete config.toast; // Eliminar toast si existe
-      delete config.timer; // Eliminar timer si no es necesario para centrarlo
+      // Si tiene timer, agregar función para asegurar cierre
+      if (options.timer && !options.showConfirmButton) {
+        const originalDidOpen = options.didOpen;
+        config.didOpen = () => {
+          if (originalDidOpen) originalDidOpen();
+          setTimeout(() => {
+            if (Swal.isVisible()) {
+              Swal.close();
+            }
+          }, options.timer);
+        };
+      }
 
       return await Swal.fire(config);
     }
@@ -869,11 +877,24 @@
 
         console.log('🎬 Cámara iniciada correctamente');
 
-        // Mostrar mensaje de éxito CENTRADO
-        await showAlert('success', '¡Perfecto!', 'Cámara iniciada correctamente ✨', {
+        // Mostrar mensaje de éxito CENTRADO con timer funcional
+        Swal.fire({
+          ...swalConfig,
+          title: '🎉 ¡Perfecto!',
+          text: 'Cámara iniciada correctamente ✨',
+          icon: 'success',
           timer: 2000,
+          timerProgressBar: true,
           showConfirmButton: false,
-          position: 'center' // CENTRADO
+          position: 'center',
+          didOpen: () => {
+            // Asegurar que se cierre automáticamente
+            setTimeout(() => {
+              if (Swal.isVisible()) {
+                Swal.close();
+              }
+            }, 2000);
+          }
         });
 
       } catch (err) {
@@ -1072,7 +1093,7 @@
           // Cerrar loading alert
           Swal.close();
           
-          // Mostrar éxito con confetti
+          // Mostrar éxito con confetti y CIERRE AUTOMÁTICO
           await showAlert('success', '¡Increíble!', 'Tu foto se guardó perfectamente', {
             html: `
               <div style="text-align: center; margin: 20px 0;">
@@ -1087,7 +1108,9 @@
             `,
             confirmButtonText: '¡Genial! 💖',
             allowOutsideClick: true,
-            timer: 4000
+            timer: 4000,
+            timerProgressBar: true,
+            showConfirmButton: true
           });
           
           // Ocultar preview después de un momento
@@ -1284,16 +1307,22 @@
         info: 'ℹ️'
       };
 
-      // TODOS LOS TOASTS TAMBIÉN CENTRADOS
-      showAlert(type, '', message, {
-        position: 'center', // CENTRADO
+      // TOAST CENTRADO con cierre automático
+      Swal.fire({
+        ...swalConfig,
+        title: `${icons[type]} ${message}`,
+        position: 'center',
         timer: 3000,
         timerProgressBar: true,
         showConfirmButton: false,
-        html: `<div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                 <span style="font-size: 1.5rem;">${icons[type]}</span>
-                 <span>${message}</span>
-               </div>`
+        width: window.innerWidth <= 480 ? 280 : 320,
+        didOpen: () => {
+          setTimeout(() => {
+            if (Swal.isVisible()) {
+              Swal.close();
+            }
+          }, 3000);
+        }
       });
     }
 
