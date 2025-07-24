@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mis 15 Años</title>
   <style>
     body {
@@ -35,6 +35,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      margin: 0 auto;
       transition: background 0.3s;
     }
 
@@ -48,6 +49,8 @@
     }
 
     video {
+      margin-top: 1rem;
+      width: 100%;
       display: none;
     }
   </style>
@@ -64,9 +67,9 @@
     Tomar foto
   </button>
 
-  <video id="video" autoplay playsinline width="100%"></video>
+  <video id="video" autoplay playsinline></video>
   <canvas id="canvas" style="display: none;"></canvas>
-  <img id="preview" alt="preview"/>
+  <img id="preview" alt="Foto tomada"/>
 
   <script>
     const cameraBtn = document.getElementById('cameraBtn');
@@ -76,13 +79,16 @@
 
     cameraBtn.addEventListener('click', async () => {
       try {
+        // Solicita la cámara trasera con preferencia
         const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { exact: "environment" } }, // Esto pide la trasera
-        audio: false
-      });
+          video: { facingMode: { ideal: "environment" } },
+          audio: false
+        });
+
         video.srcObject = stream;
         video.style.display = 'block';
 
+        // Esperar 3 segundos antes de tomar la foto
         setTimeout(() => {
           const context = canvas.getContext('2d');
           canvas.width = video.videoWidth;
@@ -93,10 +99,11 @@
           preview.src = dataUrl;
           preview.style.display = 'block';
 
+          // Detener la cámara
           video.srcObject.getTracks().forEach(track => track.stop());
           video.style.display = 'none';
 
-          // Enviar al backend
+          // Enviar imagen al backend
           fetch('http://192.168.2.12:3000/api/upload', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -114,7 +121,7 @@
             alert("❌ Error al subir la foto: " + err.message);
           });
 
-        }, 3000); // Espera 3 seg para capturar foto
+        }, 3000);
       } catch (err) {
         alert("📵 No se pudo acceder a la cámara: " + err.message);
       }
