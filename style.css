@@ -1,0 +1,24 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 1em;
+  background: #f4f4f4;
+}
+
+video {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 1em;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+button {
+  margin-top: 1em;
+  padding: 1em 2em;
+  font-size: 1em;
+  border: none;
+  border-radius: 0.5em;
+  background-color: #006eff;
+  color: white;
+  cursor: pointer;
+}

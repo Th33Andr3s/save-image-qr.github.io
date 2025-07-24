@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis 15 Años</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      background: #ffe0f0;
+      color: #333;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    #preview {
+      margin-top: 2rem;
+      max-width: 100%;
+      display: none;
+    }
+
+    #cameraBtn {
+      background: #ff69b4;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.3s;
+    }
+
+    #cameraBtn:hover {
+      background: #e055a0;
+    }
+
+    #cameraBtn svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    video {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎉 Bienvenido a mis 15 añitoss 🎉</h1>
+
+  <button id="cameraBtn">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+      <path d="M12 9a3 3 0 100 6 3 3 0 000-6z"/>
+      <path fill-rule="evenodd" d="M9.828 4a3 3 0 012.121.879l.95.95h3.1A2 2 0 0118 7.828v8.344a2 2 0 01-1.999 2h-8.002A2 2 0 016 16.172V7.828A2 2 0 017.828 6h3.1l.95-.95A3 3 0 019.828 4zM12 15a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+    </svg>
+    Tomar foto
+  </button>
+
+  <video id="video" autoplay playsinline width="100%"></video>
+  <canvas id="canvas" style="display: none;"></canvas>
+  <img id="preview" alt="preview"/>
+
+  <script>
+    const cameraBtn = document.getElementById('cameraBtn');
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const preview = document.getElementById('preview');
+
+    cameraBtn.addEventListener('click', async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        video.style.display = 'block';
+
+        setTimeout(() => {
+          const context = canvas.getContext('2d');
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          const dataUrl = canvas.toDataURL('image/jpeg');
+          preview.src = dataUrl;
+          preview.style.display = 'block';
+
+          video.srcObject.getTracks().forEach(track => track.stop());
+          video.style.display = 'none';
+
+          // Enviar al backend
+          fetch('http://192.168.2.12:3000/api/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: dataUrl })
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              alert("✅ Foto guardada con éxito.");
+            } else {
+              throw new Error(data.error || "Error desconocido");
+            }
+          })
+          .catch(err => {
+            alert("❌ Error al subir la foto: " + err.message);
+          });
+
+        }, 3000); // Espera 3 seg para capturar foto
+      } catch (err) {
+        alert("📵 No se pudo acceder a la cámara: " + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
