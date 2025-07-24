@@ -18,14 +18,15 @@
     body {
       font-family: 'Arial', sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 15px;
-      overflow-x: hidden;
+      overflow: hidden;
       position: relative;
+      margin: 0;
     }
 
     /* Animación de burbujas */
@@ -65,18 +66,6 @@
       width: 100%;
       position: relative;
       z-index: 10;
-      animation: slideIn 1s ease-out;
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     h1 {
@@ -84,16 +73,6 @@
       font-size: 2.2rem;
       margin-bottom: 20px;
       text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-      animation: glow 2s ease-in-out infinite alternate;
-    }
-
-    @keyframes glow {
-      from {
-        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.3);
-      }
-      to {
-        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 255, 255, 0.6);
-      }
     }
 
     .subtitle {
@@ -208,18 +187,6 @@
       margin: 20px 0;
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
       border: 3px solid rgba(255, 255, 255, 0.3);
-      animation: photoReveal 0.5s ease-out;
-    }
-
-    @keyframes photoReveal {
-      from {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
     }
 
     /* Loading spinner mejorado */
@@ -452,8 +419,8 @@
     const preview = document.getElementById('preview');
     const loading = document.getElementById('loading');
     
-    // Definir URL de la API
-    const urlApi = "https://api-save-image-qr-production.up.railway.app/api/upload";
+    // Definir URL de la API (aquí puedes poner tu URL real)
+    const urlApi = 'https://api-save-image-qr-production.up.railway.app/api/upload'; // Cambia por tu URL real
     
     let currentStream = null;
     let currentFacing = 'user';
