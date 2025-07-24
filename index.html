@@ -76,6 +76,7 @@
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const preview = document.getElementById('preview');
+    const urlApi = 'https://api-save-image-qr-production.up.railway.app/'
 
     cameraBtn.addEventListener('click', async () => {
       try {
@@ -104,7 +105,7 @@
           video.style.display = 'none';
 
           // Enviar imagen al backend
-          fetch('https://api-save-image-qr-production.up.railway.app/api/upload', {
+          fetch(urlApi + 'api/upload', {
             method: 'POST',
             headers: { 
               'Content-Type': 'application/json'
