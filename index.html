@@ -116,14 +116,15 @@
       background: rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(25px);
       border-radius: 30px;
-      padding: 40px 30px;
+      padding: 30px 20px;
       box-shadow: 
         0 30px 60px rgba(0, 0, 0, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.4);
       border: 1px solid rgba(255, 255, 255, 0.3);
       text-align: center;
-      max-width: 420px;
-      width: 100%;
+      max-width: 380px;
+      width: calc(100% - 40px);
+      margin: 20px;
       position: relative;
       z-index: 1;
       animation: containerGlow 3s ease-in-out infinite alternate;
@@ -262,8 +263,8 @@
     /* Selector de cámara mejorado */
     .camera-selector {
       display: none;
-      margin: 25px 0;
-      gap: 15px;
+      margin: 20px 0 15px 0;
+      gap: 12px;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -300,13 +301,13 @@
     #video, #preview {
       display: none;
       width: 100%;
-      max-width: 380px;
-      border-radius: 20px;
-      margin: 25px 0;
+      max-width: 280px;
+      border-radius: 15px;
+      margin: 15px 0;
       box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 15px 30px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      border: 3px solid rgba(255, 255, 255, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.4);
       transition: all 0.3s ease;
     }
 
@@ -370,15 +371,34 @@
       100% { opacity: 1; }
     }
 
-    /* SweetAlert2 personalizado y mejorado */
+    /* SweetAlert2 personalizado y mejorado - TODAS CENTRADAS */
+    .swal2-container {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: 9999999 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: rgba(0, 0, 0, 0.8) !important;
+      backdrop-filter: blur(5px) !important;
+    }
+
     .swal2-popup {
       border-radius: 25px !important;
       background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%) !important;
       width: 350px !important;
       padding: 30px !important;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3) !important;        
+      box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.3) !important,
+        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
       border: 1px solid rgba(255, 255, 255, 0.5) !important;
       font-family: 'Poppins', sans-serif !important;
+      position: relative !important;
+      transform: none !important;
+      margin: 0 !important;
     }
 
     .swal2-title {
@@ -450,15 +470,15 @@
     /* Responsive optimizado para móviles */
     @media (max-width: 768px) {
       body {
-        padding: 5px;
+        padding: 10px;
       }
       
       .container {
-        padding: 25px 20px;
+        padding: 25px 15px;
         border-radius: 25px;
-        width: calc(100% - 10px);
+        width: calc(100% - 20px);
         max-width: none;
-        margin: 10px 5px;
+        margin: 10px;
       }
       
       h1 {
@@ -479,23 +499,24 @@
       }
       
       .btn-capture {
-        padding: 18px 32px;
-        font-size: 1.1rem;
+        padding: 16px 30px;
+        font-size: 1.05rem;
+        margin: 10px auto;
       }
       
       #video, #preview {
-        max-width: 100%;
-        margin: 20px 0;
-        border-radius: 15px;
+        max-width: 260px;
+        margin: 12px 0;
+        border-radius: 12px;
       }
       
       .camera-selector {
-        gap: 12px;
-        margin: 20px 0;
+        gap: 10px;
+        margin: 15px 0 10px 0;
       }
       
       .camera-btn {
-        padding: 10px 20px;
+        padding: 10px 18px;
         font-size: 0.9rem;
         min-width: 120px;
       }
@@ -515,9 +536,14 @@
     }
 
     @media (max-width: 480px) {
+      body {
+        padding: 5px;
+      }
+      
       .container {
-        padding: 20px 15px;
-        width: calc(100% - 20px);
+        padding: 20px 12px;
+        width: calc(100% - 10px);
+        margin: 5px;
       }
       
       h1 {
@@ -535,20 +561,45 @@
       }
 
       .btn-capture {
-        padding: 15px 28px;
+        padding: 14px 26px;
         font-size: 1rem;
+        margin: 8px auto;
+      }
+
+      #video, #preview {
+        max-width: 240px;
+        margin: 10px 0;
+      }
+
+      .camera-selector {
+        margin: 12px 0 8px 0;
+        gap: 8px;
+      }
+
+      .camera-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        min-width: 110px;
       }
 
       .swal2-popup {
         width: 280px !important;
         padding: 20px !important;
       }
+
+      .swal2-title {
+        font-size: 1.2rem !important;
+      }
+      
+      .swal2-html-container {
+        font-size: 0.85rem !important;
+      }
     }
 
     @media (max-width: 360px) {
       .container {
-        padding: 15px 12px;
-        width: calc(100% - 16px);
+        padding: 15px 10px;
+        width: calc(100% - 10px);
       }
       
       h1 {
@@ -559,6 +610,26 @@
         min-width: 160px;
         padding: 10px 20px;
         font-size: 0.85rem;
+      }
+
+      .btn-capture {
+        padding: 12px 22px;
+        font-size: 0.95rem;
+      }
+
+      #video, #preview {
+        max-width: 220px;
+      }
+
+      .camera-btn {
+        min-width: 100px;
+        padding: 7px 14px;
+        font-size: 0.8rem;
+      }
+
+      .swal2-popup {
+        width: 260px !important;
+        padding: 18px !important;
       }
     }
 
@@ -632,7 +703,7 @@
   </div>
 
   <script>
-    // Configuración de SweetAlert2 optimizada
+    // Configuración de SweetAlert2 optimizada - TODAS CENTRADAS
     const swalConfig = {
       width: 350,
       padding: '30px',
@@ -640,6 +711,7 @@
       backdrop: 'rgba(0, 0, 0, 0.8)',
       confirmButtonColor: '#ff6b9d',
       cancelButtonColor: '#95a5a6',
+      position: 'center', // FORZAR CENTRO
       showClass: {
         popup: 'animate__animated animate__fadeInUp animate__faster',
         backdrop: 'animate__animated animate__fadeIn animate__faster'
@@ -655,7 +727,8 @@
         title: 'custom-swal-title',
         htmlContainer: 'custom-swal-html',
         confirmButton: 'custom-swal-confirm',
-        cancelButton: 'custom-swal-cancel'
+        cancelButton: 'custom-swal-cancel',
+        container: 'custom-swal-container'
       }
     };
 
@@ -707,7 +780,7 @@
     const preview = document.getElementById('preview');
     const loading = document.getElementById('loading');
     
-    // URL de la API
+    // URL de la API (cambiar por la URL real)
     const urlApi = 'https://api-save-image-qr-production.up.railway.app/api/upload';
     
     let currentStream = null;
@@ -731,11 +804,19 @@
         ...options
       };
 
-      // Para móviles, ajustar el tamaño
+      // Para móviles, ajustar el tamaño y FORZAR CENTRO
       if (window.innerWidth <= 480) {
         config.width = 280;
         config.padding = '20px';
+      } else if (window.innerWidth <= 768) {
+        config.width = 300;
+        config.padding = '25px';
       }
+      
+      // FORZAR POSICIÓN CENTRO SIEMPRE
+      config.position = 'center';
+      delete config.toast; // Eliminar toast si existe
+      delete config.timer; // Eliminar timer si no es necesario para centrarlo
 
       return await Swal.fire(config);
     }
@@ -789,12 +870,11 @@
 
         console.log('🎬 Cámara iniciada correctamente');
 
-        // Mostrar mensaje de éxito
+        // Mostrar mensaje de éxito CENTRADO
         await showAlert('success', '¡Perfecto!', 'Cámara iniciada correctamente ✨', {
           timer: 2000,
           showConfirmButton: false,
-          toast: true,
-          position: 'top-end'
+          position: 'center' // CENTRADO
         });
 
       } catch (err) {
@@ -1205,13 +1285,13 @@
         info: 'ℹ️'
       };
 
+      // TODOS LOS TOASTS TAMBIÉN CENTRADOS
       showAlert(type, '', message, {
-        toast: true,
-        position: 'top-end',
+        position: 'center', // CENTRADO
         timer: 3000,
         timerProgressBar: true,
         showConfirmButton: false,
-        html: `<div style="display: flex; align-items: center; gap: 10px;">
+        html: `<div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
                  <span style="font-size: 1.5rem;">${icons[type]}</span>
                  <span>${message}</span>
                </div>`
