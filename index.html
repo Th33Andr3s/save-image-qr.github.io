@@ -72,7 +72,7 @@
     const countdown = document.getElementById('countdown');
     const loading = document.getElementById('loading');
     
-    const urlApi = 'api-save-image-qr.railway.internal/api/upload';
+    const urlApi = 'https://api-save-image-qr.railway.internal/api/upload';
 
     // Función para mostrar countdown
     function showCountdown(seconds) {
@@ -131,7 +131,7 @@
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { 
             facingMode: { ideal: "environment" },
-            width: { ideal: 1280 },
+            width: { ideal: 1200 },
             height: { ideal: 720 }
           },
           audio: false
@@ -144,7 +144,7 @@
         // Mostrar instrucciones
         await Swal.fire({
           title: '📱 ¡Perfecto!',
-          text: 'La foto se tomará automáticamente en 3 segundos. ¡Sonríe! 😊',
+          text: 'La foto se tomará automáticamente en 5 segundos. ¡Sonríe! 😊',
           icon: 'success',
           timer: 2000,
           showConfirmButton: false,
@@ -153,7 +153,7 @@
         });
 
         // Countdown visual
-        await showCountdown(3);
+        await showCountdown(5);
 
         console.log('📷 Tomando foto...');
         
