@@ -440,8 +440,8 @@
       }, (duration + delay) * 1000);
     }
 
-    // Crear burbujas cada 400ms
-    setInterval(createBubble, 400);
+    // Crear burbujas cada 800ms
+    setInterval(createBubble, 800);
 
     // Variables principales
     const startBtn = document.getElementById('startBtn');
@@ -470,11 +470,15 @@
     // Iniciar cámara
     async function startCamera(facingMode = 'user') {
       try {
+        console.log('🎥 Iniciando cámara con modo:', facingMode);
+        
         // Detener stream anterior si existe
         if (currentStream) {
+          console.log('🛑 Deteniendo stream anterior...');
           currentStream.getTracks().forEach(track => track.stop());
         }
 
+        console.log('📱 Solicitando permisos de cámara...');
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { 
             facingMode: { ideal: facingMode },
@@ -484,6 +488,7 @@
           audio: false
         });
 
+        console.log('✅ Stream obtenido exitosamente');
         currentStream = stream;
         video.srcObject = stream;
         video.style.display = 'block';
@@ -497,8 +502,11 @@
           btn.classList.toggle('active', btn.dataset.facing === facingMode);
         });
 
+        console.log('🎬 Cámara iniciada correctamente');
+
       } catch (err) {
-        console.error('Error al iniciar cámara:', err);
+        console.error('❌ Error al iniciar cámara:', err);
+        console.error('📋 Detalles del error:', err.name, err.message);
         
         let errorMessage = "No se pudo acceder a la cámara";
         if (err.name === 'NotAllowedError') {
@@ -507,13 +515,18 @@
           errorMessage = "No se encontró cámara en tu dispositivo";
         }
 
-        await Swal.fire({
-          ...swalConfig,
-          title: "Error de cámara",
-          text: errorMessage,
-          icon: 'error',
-          confirmButtonText: 'Entendido'
-        });
+        try {
+          await Swal.fire({
+            ...swalConfig,
+            title: "Error de cámara",
+            text: errorMessage,
+            icon: 'error',
+            confirmButtonText: 'Entendido'
+          });
+        } catch (swalError) {
+          console.error('❌ Error con SweetAlert:', swalError);
+          alert(errorMessage); // Fallback si SweetAlert falla
+        }
       }
     }
 
@@ -632,17 +645,30 @@
 
     // Event listeners
     startBtn.addEventListener('click', async () => {
-      const result = await Swal.fire({
-        ...swalConfig,
-        title: '📸 ¡Hora de brillar!',
-        text: '¿Lista para la sesión de fotos?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: '¡Vamos! ✨',
-        cancelButtonText: 'Después'
-      });
+      try {
+        console.log('🎬 Botón iniciar cámara presionado...');
+        
+        const result = await Swal.fire({
+          ...swalConfig,
+          title: '📸 ¡Hora de brillar!',
+          text: '¿Lista para la sesión de fotos?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: '¡Vamos! ✨',
+          cancelButtonText: 'Después'
+        });
 
-      if (result.isConfirmed) {
+        console.log('🤔 Resultado de la alerta:', result);
+
+        if (result.isConfirmed) {
+          console.log('✅ Usuario confirmó, iniciando cámara...');
+          await startCamera(currentFacing);
+        } else {
+          console.log('❌ Usuario canceló');
+        }
+      } catch (error) {
+        console.error('❌ Error en startBtn click:', error);
+        // Si SweetAlert falla, iniciar cámara directamente
         await startCamera(currentFacing);
       }
     });
