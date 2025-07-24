@@ -297,13 +297,13 @@
       box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
     }
 
-    /* Video y preview mejorados */
+    /* Video y preview mejorados - CENTRADOS */
     #video, #preview {
       display: none;
       width: 100%;
       max-width: 280px;
       border-radius: 15px;
-      margin: 15px 0;
+      margin: 15px auto;
       box-shadow: 
         0 15px 30px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -391,9 +391,8 @@
       background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%) !important;
       width: 350px !important;
       padding: 30px !important;
-      box-shadow: 
-        0 25px 50px rgba(0, 0, 0, 0.3) !important,
-        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3) !important;
+      inset: 0 1px 0 rgba(255, 255, 255, 0.8) !important;
       border: 1px solid rgba(255, 255, 255, 0.5) !important;
       font-family: 'Poppins', sans-serif !important;
       position: relative !important;
@@ -506,7 +505,7 @@
       
       #video, #preview {
         max-width: 260px;
-        margin: 12px 0;
+        margin: 12px auto;
         border-radius: 12px;
       }
       
@@ -568,7 +567,7 @@
 
       #video, #preview {
         max-width: 240px;
-        margin: 10px 0;
+        margin: 10px auto;
       }
 
       .camera-selector {
@@ -1027,7 +1026,17 @@
         video.style.display = 'none';
         captureBtn.style.display = 'none';
         cameraSelector.style.display = 'none';
+        
+        // RESTAURAR BOTÓN DE INICIAR CÁMARA
         startBtn.style.display = 'flex';
+        startBtn.disabled = false;
+        startBtn.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+            <path d="M12 9a3 3 0 100 6 3 3 0 000-6z"/>
+            <path fill-rule="evenodd" d="M9.828 4a3 3 0 012.121.879l.95.95h3.1A2 2 0 0118 7.828v8.344a2 2 0 01-1.999 2h-8.002A2 2 0 016 16.172V7.828A2 2 0 017.828 6h3.1l.95-.95A3 3 0 019.828 4zM12 15a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+          </svg>
+          Iniciar Cámara
+        `;
 
         // Mostrar loading con animación mejorada
         loading.style.display = 'block';
@@ -1135,6 +1144,17 @@
         if (currentStream) {
           currentStream.getTracks().forEach(track => track.stop());
         }
+
+        // RESTAURAR BOTÓN DE INICIAR CÁMARA
+        startBtn.style.display = 'flex';
+        startBtn.disabled = false;
+        startBtn.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+            <path d="M12 9a3 3 0 100 6 3 3 0 000-6z"/>
+            <path fill-rule="evenodd" d="M9.828 4a3 3 0 012.121.879l.95.95h3.1A2 2 0 0118 7.828v8.344a2 2 0 01-1.999 2h-8.002A2 2 0 016 16.172V7.828A2 2 0 017.828 6h3.1l.95-.95A3 3 0 019.828 4zM12 15a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+          </svg>
+          Iniciar Cámara
+        `;
 
         // Cerrar cualquier alert abierto
         Swal.close();
