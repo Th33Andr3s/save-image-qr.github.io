@@ -104,7 +104,7 @@
           video.style.display = 'none';
 
           // Enviar imagen al backend
-          fetch('https://api-save-image-qr-production.up.railway.app', {
+          fetch('https://api-save-image-qr-production.up.railway.app/api/upload', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ image: dataUrl })
