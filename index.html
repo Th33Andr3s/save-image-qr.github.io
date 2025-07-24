@@ -452,7 +452,8 @@
     const preview = document.getElementById('preview');
     const loading = document.getElementById('loading');
     
-    const urlApi = proccess.env.URL_API;
+    // Definir URL de la API
+    const urlApi = "https://api-save-image-qr-production.up.railway.app/api/upload";
     
     let currentStream = null;
     let currentFacing = 'user';
@@ -515,7 +516,8 @@
           errorMessage = "No se encontró cámara en tu dispositivo";
         }
 
-        try {
+        // Usar alert como fallback si SweetAlert no está disponible
+        if (typeof Swal !== 'undefined') {
           await Swal.fire({
             ...swalConfig,
             title: "Error de cámara",
@@ -523,9 +525,8 @@
             icon: 'error',
             confirmButtonText: 'Entendido'
           });
-        } catch (swalError) {
-          console.error('❌ Error con SweetAlert:', swalError);
-          alert(errorMessage); // Fallback si SweetAlert falla
+        } else {
+          alert(errorMessage);
         }
       }
     }
@@ -533,18 +534,25 @@
     // Tomar foto
     async function takePhoto() {
       try {
-        // Mostrar alerta de confirmación más pequeña
-        const result = await Swal.fire({
-          ...swalConfig,
-          title: '📸 ¡Sonríe!',
-          text: '¿Lista para tomar la foto?',
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonText: '¡Sí! ✨',
-          cancelButtonText: 'Espera'
-        });
+        // Mostrar alerta de confirmación más pequeña (con fallback)
+        let shouldProceed = true;
+        
+        if (typeof Swal !== 'undefined') {
+          const result = await Swal.fire({
+            ...swalConfig,
+            title: '📸 ¡Sonríe!',
+            text: '¿Lista para tomar la foto?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: '¡Sí! ✨',
+            cancelButtonText: 'Espera'
+          });
+          shouldProceed = result.isConfirmed;
+        } else {
+          shouldProceed = confirm('📸 ¡Sonríe! ¿Lista para tomar la foto?');
+        }
 
-        if (!result.isConfirmed) return;
+        if (!shouldProceed) return;
 
         console.log('📷 Tomando foto...');
         
@@ -571,16 +579,18 @@
         loading.style.display = 'block';
 
         // Alerta de guardado
-        Swal.fire({
-          ...swalConfig,
-          title: 'Guardando...',
-          html: 'Tu foto se está guardando ✨',
-          allowOutsideClick: false,
-          showConfirmButton: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        });
+        if (typeof Swal !== 'undefined') {
+          Swal.fire({
+            ...swalConfig,
+            title: 'Guardando...',
+            html: 'Tu foto se está guardando ✨',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+              Swal.showLoading();
+            }
+          });
+        }
 
         console.log('📤 Enviando imagen al servidor...');
 
@@ -603,13 +613,17 @@
         console.log('✅ Respuesta exitosa:', data);
 
         if (data.success) {
-          await Swal.fire({
-            ...swalConfig,
-            title: '🎉 ¡Perfecto!',
-            text: 'Tu foto se guardó exitosamente ✨',
-            icon: 'success',
-            confirmButtonText: '¡Genial! 💖'
-          });
+          if (typeof Swal !== 'undefined') {
+            await Swal.fire({
+              ...swalConfig,
+              title: '🎉 ¡Perfecto!',
+              text: 'Tu foto se guardó exitosamente ✨',
+              icon: 'success',
+              confirmButtonText: '¡Genial! 💖'
+            });
+          } else {
+            alert('🎉 ¡Perfecto! Tu foto se guardó exitosamente ✨');
+          }
         } else {
           throw new Error(data.error || "Error desconocido");
         }
@@ -633,70 +647,100 @@
           errorMessage = "Error de conexión. Revisa tu internet";
         }
 
-        await Swal.fire({
-          ...swalConfig,
-          title: "Error",
-          text: errorMessage,
-          icon: 'error',
-          confirmButtonText: 'Entendido'
-        });
+        if (typeof Swal !== 'undefined') {
+          await Swal.fire({
+            ...swalConfig,
+            title: "Error",
+            text: errorMessage,
+            icon: 'error',
+            confirmButtonText: 'Entendido'
+          });
+        } else {
+          alert(errorMessage);
+        }
       }
     }
 
-    // Event listeners
-    startBtn.addEventListener('click', async () => {
-      try {
-        console.log('🎬 Botón iniciar cámara presionado...');
-        
-        const result = await Swal.fire({
-          ...swalConfig,
-          title: '📸 ¡Hora de brillar!',
-          text: '¿Lista para la sesión de fotos?',
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonText: '¡Vamos! ✨',
-          cancelButtonText: 'Después'
-        });
+    // Event listeners - Esperamos a que la página se cargue completamente
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🚀 Página cargada, configurando event listeners...');
+      
+      // Event listener para el botón de iniciar
+      startBtn.addEventListener('click', async (e) => {
+        e.preventDefault(); // Prevenir comportamiento por defecto
+        try {
+          console.log('🎬 Botón iniciar cámara presionado...');
+          
+          // Comprobar si SweetAlert está disponible
+          if (typeof Swal !== 'undefined') {
+            const result = await Swal.fire({
+              ...swalConfig,
+              title: '📸 ¡Hora de brillar!',
+              text: '¿Lista para la sesión de fotos?',
+              icon: 'question',
+              showCancelButton: true,
+              confirmButtonText: '¡Vamos! ✨',
+              cancelButtonText: 'Después'
+            });
 
-        console.log('🤔 Resultado de la alerta:', result);
+            console.log('🤔 Resultado de la alerta:', result);
 
-        if (result.isConfirmed) {
-          console.log('✅ Usuario confirmó, iniciando cámara...');
+            if (result.isConfirmed) {
+              console.log('✅ Usuario confirmó, iniciando cámara...');
+              await startCamera(currentFacing);
+            } else {
+              console.log('❌ Usuario canceló');
+            }
+          } else {
+            // Fallback si SweetAlert no está disponible
+            console.log('⚠️ SweetAlert no disponible, usando confirm nativo');
+            const confirmed = confirm('📸 ¡Hora de brillar! ¿Lista para la sesión de fotos?');
+            if (confirmed) {
+              await startCamera(currentFacing);
+            }
+          }
+        } catch (error) {
+          console.error('❌ Error en startBtn click:', error);
+          // Si todo falla, intentar iniciar cámara directamente
           await startCamera(currentFacing);
-        } else {
-          console.log('❌ Usuario canceló');
-        }
-      } catch (error) {
-        console.error('❌ Error en startBtn click:', error);
-        // Si SweetAlert falla, iniciar cámara directamente
-        await startCamera(currentFacing);
-      }
-    });
-
-    captureBtn.addEventListener('click', takePhoto);
-
-    // Selector de cámara
-    document.querySelectorAll('.camera-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const facing = btn.dataset.facing;
-        if (facing !== currentFacing) {
-          startCamera(facing);
         }
       });
+
+      // Event listener para el botón de captura
+      captureBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        takePhoto();
+      });
+
+      // Selector de cámara
+      document.querySelectorAll('.camera-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const facing = btn.dataset.facing;
+          if (facing !== currentFacing) {
+            startCamera(facing);
+          }
+        });
+      });
+
+      // Efectos de hover
+      startBtn.addEventListener('mouseenter', () => {
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => createBubble(), i * 200);
+        }
+      });
+
+      captureBtn.addEventListener('mouseenter', () => {
+        for (let i = 0; i < 2; i++) {
+          setTimeout(() => createBubble(), i * 150);
+        }
+      });
+
+      console.log('✅ Event listeners configurados correctamente');
     });
 
-    // Efectos de hover
-    startBtn.addEventListener('mouseenter', () => {
-      for (let i = 0; i < 3; i++) {
-        setTimeout(() => createBubble(), i * 200);
-      }
-    });
-
-    captureBtn.addEventListener('mouseenter', () => {
-      for (let i = 0; i < 2; i++) {
-        setTimeout(() => createBubble(), i * 150);
-      }
-    });
+    // Log adicional para debugging
+    console.log('🔧 Script cargado, esperando DOM...');
   </script>
 </body>
 </html>
