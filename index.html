@@ -2,11 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
   <title>🎉 Mis 15 Años 🎉</title>
   
   <!-- SweetAlert2 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.12.4/sweetalert2.all.min.js"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   
   <style>
     * {
@@ -15,29 +18,53 @@
       box-sizing: border-box;
     }
 
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
     body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      width: 100vw;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 15px;
-      overflow: hidden;
       position: relative;
-      margin: 0;
+      padding: 10px;
     }
 
-    /* Animación de burbujas */
-    .bubble {
+    /* Partículas flotantes mejoradas */
+    .particle {
       position: absolute;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
       pointer-events: none;
-      animation: float 6s ease-in-out infinite;
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 0;
+    }
+
+    .bubble {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .heart {
+      color: rgba(255, 192, 203, 0.8);
+      font-size: 20px;
+      animation: heartFloat 10s ease-in-out infinite;
+    }
+
+    .star {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 16px;
+      animation: starTwinkle 6s ease-in-out infinite;
     }
 
     @keyframes float {
@@ -48,100 +75,195 @@
       10% { opacity: 1; }
       90% { opacity: 1; }
       100% {
-        transform: translateY(-100vh) rotate(360deg);
+        transform: translateY(-120vh) rotate(360deg);
         opacity: 0;
       }
     }
 
-    /* Contenedor principal */
-    .container {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px);
-      border-radius: 25px;
-      padding: 30px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      text-align: center;
-      max-width: 500px;
-      width: 100%;
-      position: relative;
-      z-index: 10;
+    @keyframes heartFloat {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      50% { transform: translateY(-60vh) scale(1.2); }
+      90% { opacity: 1; }
+      100% {
+        transform: translateY(-120vh) scale(0.8);
+        opacity: 0;
+      }
     }
 
+    @keyframes starTwinkle {
+      0%, 100% {
+        transform: translateY(0px) scale(1) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      50% { 
+        transform: translateY(-60vh) scale(1.5) rotate(180deg);
+        opacity: 0.8;
+      }
+      90% { opacity: 1; }
+      100% {
+        transform: translateY(-120vh) scale(0.5) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Contenedor principal mejorado */
+    .container {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(25px);
+      border-radius: 30px;
+      padding: 40px 30px;
+      box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      animation: containerGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes containerGlow {
+      0% {
+        box-shadow: 
+          0 30px 60px rgba(0, 0, 0, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4),
+          0 0 30px rgba(255, 255, 255, 0.1);
+      }
+      100% {
+        box-shadow: 
+          0 30px 60px rgba(0, 0, 0, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4),
+          0 0 50px rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    /* Título principal */
     h1 {
       color: white;
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      text-shadow: 
+        2px 2px 10px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(255, 255, 255, 0.3);
+      font-weight: 700;
+      letter-spacing: 1px;
+      animation: titlePulse 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes titlePulse {
+      0% { text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.3); }
+      100% { text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 255, 255, 0.5); }
     }
 
     .subtitle {
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 1.1rem;
-      margin-bottom: 25px;
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 1.2rem;
+      margin-bottom: 30px;
       font-style: italic;
+      font-weight: 300;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
     }
 
-    /* Botones principales */
+    /* Botones mejorados */
     .btn {
-      background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+      background: linear-gradient(45deg, #ff6b9d, #c44569, #f8b500);
       color: white;
       border: none;
-      padding: 15px 30px;
-      font-size: 1rem;
+      padding: 18px 35px;
+      font-size: 1.1rem;
       border-radius: 50px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin: 15px auto;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
-      font-weight: bold;
+      gap: 12px;
+      margin: 20px auto;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 
+        0 10px 25px rgba(255, 107, 157, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      min-width: 200px;
+      letter-spacing: 1px;
+      min-width: 220px;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
     }
 
     .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(255, 107, 107, 0.4);
-      background: linear-gradient(45deg, #ff5252, #e53935);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 
+        0 15px 35px rgba(255, 107, 157, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      background: linear-gradient(45deg, #ff5e8a, #b63954, #e6a200);
     }
 
     .btn:active {
-      transform: translateY(0px);
+      transform: translateY(-1px) scale(0.98);
     }
 
     .btn svg {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       transition: transform 0.3s ease;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     }
 
     .btn:hover svg {
-      transform: scale(1.1);
+      transform: scale(1.15) rotate(5deg);
     }
 
-    /* Botón de captura */
+    /* Botón de captura especial */
     .btn-capture {
-      background: linear-gradient(45deg, #4caf50, #45a049);
-      box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
-      font-size: 1.1rem;
-      padding: 18px 35px;
+      background: linear-gradient(45deg, #4ecdc4, #44a08d, #096dd9);
+      box-shadow: 
+        0 10px 25px rgba(78, 205, 196, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      font-size: 1.2rem;
+      padding: 20px 40px;
+      animation: captureGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes captureGlow {
+      0% { box-shadow: 0 10px 25px rgba(78, 205, 196, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+      100% { box-shadow: 0 15px 35px rgba(78, 205, 196, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
     }
 
     .btn-capture:hover {
-      background: linear-gradient(45deg, #45a049, #388e3c);
-      box-shadow: 0 12px 25px rgba(76, 175, 80, 0.4);
+      background: linear-gradient(45deg, #3cbcb4, #3a8b7a, #0759c4);
+      box-shadow: 
+        0 15px 35px rgba(78, 205, 196, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 
-    /* Selector de cámara */
+    /* Selector de cámara mejorado */
     .camera-selector {
       display: none;
-      margin: 20px 0;
-      gap: 10px;
+      margin: 25px 0;
+      gap: 15px;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -149,131 +271,288 @@
     .camera-btn {
       background: rgba(255, 255, 255, 0.2);
       color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      padding: 10px 20px;
-      border-radius: 25px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      padding: 12px 24px;
+      border-radius: 30px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-      min-width: 120px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 1rem;
+      min-width: 140px;
+      font-weight: 500;
+      backdrop-filter: blur(10px);
+      font-family: 'Poppins', sans-serif;
     }
 
     .camera-btn:hover {
       background: rgba(255, 255, 255, 0.3);
-      border-color: rgba(255, 255, 255, 0.5);
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
     }
 
     .camera-btn.active {
-      background: linear-gradient(45deg, #ff6b6b, #ee5a52);
-      border-color: #ff6b6b;
+      background: linear-gradient(45deg, #ff6b9d, #c44569);
+      border-color: #ff6b9d;
+      box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
     }
 
-    /* Video y preview */
-    #video {
+    /* Video y preview mejorados */
+    #video, #preview {
       display: none;
       width: 100%;
-      max-width: 350px;
-      border-radius: 15px;
-      margin: 20px 0;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      border: 3px solid rgba(255, 255, 255, 0.3);
+      max-width: 380px;
+      border-radius: 20px;
+      margin: 25px 0;
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      border: 3px solid rgba(255, 255, 255, 0.4);
+      transition: all 0.3s ease;
     }
 
-    #preview {
-      display: none;
-      width: 100%;
-      max-width: 350px;
-      border-radius: 15px;
-      margin: 20px 0;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      border: 3px solid rgba(255, 255, 255, 0.3);
+    #video:hover, #preview:hover {
+      transform: scale(1.02);
+      box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 
-    /* Loading spinner mejorado */
+    /* Loading mejorado */
     .loading {
       display: none;
-      margin: 20px 0;
+      margin: 25px 0;
       text-align: center;
     }
 
     .loading .spinner {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       border: 4px solid rgba(255, 255, 255, 0.3);
-      border-top: 4px solid white;
+      border-top: 4px solid #ff6b9d;
+      border-right: 4px solid #4ecdc4;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 15px;
+      animation: rainbow-spin 1.5s linear infinite;
+      margin: 0 auto 20px;
+      box-shadow: 0 0 20px rgba(255, 107, 157, 0.3);
     }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    @keyframes rainbow-spin {
+      0% { 
+        transform: rotate(0deg);
+        border-top-color: #ff6b9d;
+        border-right-color: #4ecdc4;
+      }
+      33% {
+        border-top-color: #4ecdc4;
+        border-right-color: #f8b500;
+      }
+      66% {
+        border-top-color: #f8b500;
+        border-right-color: #ff6b9d;
+      }
+      100% { 
+        transform: rotate(360deg);
+        border-top-color: #ff6b9d;
+        border-right-color: #4ecdc4;
+      }
     }
 
     .loading p {
       color: white;
-      font-size: 1.1rem;
-      font-weight: bold;
+      font-size: 1.2rem;
+      font-weight: 500;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+      animation: loadingPulse 1.5s ease-in-out infinite alternate;
     }
 
-    /* Responsive para móviles */
+    @keyframes loadingPulse {
+      0% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+
+    /* SweetAlert2 personalizado y mejorado */
+    .swal2-popup {
+      border-radius: 25px !important;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%) !important;
+      width: 350px !important;
+      padding: 30px !important;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3) !important;        
+      border: 1px solid rgba(255, 255, 255, 0.5) !important;
+      font-family: 'Poppins', sans-serif !important;
+    }
+
+    .swal2-title {
+      color: #667eea !important;
+      font-weight: 700 !important;
+      font-size: 1.5rem !important;
+      margin-bottom: 15px !important;
+      text-shadow: 0 2px 4px rgba(102, 126, 234, 0.2) !important;
+    }
+
+    .swal2-html-container {
+      font-size: 1rem !important;
+      margin: 15px 0 !important;
+      color: #555 !important;
+      line-height: 1.5 !important;
+    }
+
+    .swal2-confirm {
+      background: linear-gradient(45deg, #ff6b9d, #c44569) !important;
+      border-radius: 30px !important;
+      padding: 12px 30px !important;
+      font-weight: 600 !important;
+      border: none !important;
+      font-size: 1rem !important;
+      box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4) !important;
+      transition: all 0.3s ease !important;
+      font-family: 'Poppins', sans-serif !important;
+    }
+
+    .swal2-confirm:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 12px 25px rgba(255, 107, 157, 0.5) !important;
+    }
+
+    .swal2-cancel {
+      background: linear-gradient(45deg, #95a5a6, #7f8c8d) !important;
+      border-radius: 30px !important;
+      padding: 12px 30px !important;
+      font-weight: 600 !important;
+      border: none !important;
+      font-size: 1rem !important;
+      box-shadow: 0 8px 20px rgba(149, 165, 166, 0.4) !important;
+      transition: all 0.3s ease !important;
+      font-family: 'Poppins', sans-serif !important;
+    }
+
+    .swal2-cancel:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 12px 25px rgba(149, 165, 166, 0.5) !important;
+    }
+
+    .swal2-icon {
+      border: none !important;
+      margin: 20px auto !important;
+    }
+
+    .swal2-icon.swal2-success {
+      color: #4ecdc4 !important;
+    }
+
+    .swal2-icon.swal2-error {
+      color: #ff6b6b !important;
+    }
+
+    .swal2-icon.swal2-question {
+      color: #667eea !important;
+    }
+
+    /* Responsive optimizado para móviles */
     @media (max-width: 768px) {
       body {
-        padding: 10px;
+        padding: 5px;
       }
       
       .container {
-        padding: 20px;
-        border-radius: 20px;
-        max-width: 95%;
+        padding: 25px 20px;
+        border-radius: 25px;
+        width: calc(100% - 10px);
+        max-width: none;
+        margin: 10px 5px;
       }
       
       h1 {
-        font-size: 1.8rem;
-        margin-bottom: 15px;
+        font-size: 2rem;
+        margin-bottom: 12px;
       }
       
       .subtitle {
         font-size: 1rem;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
       }
       
       .btn {
-        padding: 12px 25px;
-        font-size: 0.9rem;
-        min-width: 180px;
-        margin: 10px auto;
+        padding: 15px 28px;
+        font-size: 1rem;
+        min-width: 200px;
+        margin: 15px auto;
       }
       
       .btn-capture {
-        padding: 15px 30px;
-        font-size: 1rem;
+        padding: 18px 32px;
+        font-size: 1.1rem;
       }
       
       #video, #preview {
         max-width: 100%;
-        margin: 15px 0;
+        margin: 20px 0;
+        border-radius: 15px;
       }
       
       .camera-selector {
-        gap: 8px;
+        gap: 12px;
+        margin: 20px 0;
       }
       
       .camera-btn {
-        padding: 8px 16px;
-        font-size: 0.8rem;
-        min-width: 100px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        min-width: 120px;
+      }
+
+      .swal2-popup {
+        width: 300px !important;
+        padding: 25px !important;
+      }
+      
+      .swal2-title {
+        font-size: 1.3rem !important;
+      }
+      
+      .swal2-html-container {
+        font-size: 0.9rem !important;
       }
     }
 
     @media (max-width: 480px) {
       .container {
-        padding: 15px;
+        padding: 20px 15px;
+        width: calc(100% - 20px);
       }
       
       h1 {
-        font-size: 1.6rem;
+        font-size: 1.7rem;
+      }
+      
+      .subtitle {
+        font-size: 0.9rem;
+      }
+      
+      .btn {
+        min-width: 180px;
+        padding: 12px 24px;
+        font-size: 0.9rem;
+      }
+
+      .btn-capture {
+        padding: 15px 28px;
+        font-size: 1rem;
+      }
+
+      .swal2-popup {
+        width: 280px !important;
+        padding: 20px !important;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .container {
+        padding: 15px 12px;
+        width: calc(100% - 16px);
+      }
+      
+      h1 {
+        font-size: 1.5rem;
       }
       
       .btn {
@@ -283,59 +562,31 @@
       }
     }
 
-    /* Estilo personalizado para SweetAlert - MÁS PEQUEÑO */
-    .swal2-popup {
-      border-radius: 20px !important;
-      backdrop-filter: blur(20px) !important;
-      background: rgba(255, 255, 255, 0.95) !important;
-      width: 320px !important;
-      padding: 20px !important;
-    }
-
-    .swal2-title {
-      color: #667eea !important;
-      font-weight: bold !important;
-      font-size: 1.3rem !important;
-      margin-bottom: 10px !important;
-    }
-
-    .swal2-html-container {
-      font-size: 0.9rem !important;
-      margin: 10px 0 !important;
-    }
-
-    .swal2-confirm {
-      background: linear-gradient(45deg, #ff6b6b, #ee5a52) !important;
-      border-radius: 25px !important;
-      padding: 10px 25px !important;
-      font-weight: bold !important;
-      border: none !important;
-      font-size: 0.9rem !important;
-    }
-
-    .swal2-cancel {
-      background: linear-gradient(45deg, #95a5a6, #7f8c8d) !important;
-      border-radius: 25px !important;
-      padding: 10px 25px !important;
-      font-weight: bold !important;
-      border: none !important;
-      font-size: 0.9rem !important;
-    }
-
-    /* SweetAlert responsive */
-    @media (max-width: 480px) {
-      .swal2-popup {
-        width: 280px !important;
-        padding: 15px !important;
+    /* Efectos de entrada */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
       }
-      
-      .swal2-title {
-        font-size: 1.1rem !important;
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
-      
-      .swal2-html-container {
-        font-size: 0.85rem !important;
-      }
+    }
+
+    .container {
+      animation: fadeInUp 1s ease-out;
+    }
+
+    /* Estados de botones */
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn:disabled:hover {
+      transform: none !important;
     }
   </style>
 </head>
@@ -361,7 +612,7 @@
       </button>
     </div>
 
-    <video id="video" autoplay playsinline></video>
+    <video id="video" autoplay playsinline muted></video>
     
     <button id="captureBtn" class="btn btn-capture" style="display: none;">
       <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
@@ -381,34 +632,71 @@
   </div>
 
   <script>
-    // Crear burbujas animadas
-    function createBubble() {
-      const bubble = document.createElement('div');
-      bubble.classList.add('bubble');
+    // Configuración de SweetAlert2 optimizada
+    const swalConfig = {
+      width: 350,
+      padding: '30px',
+      background: 'linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%)',
+      backdrop: 'rgba(0, 0, 0, 0.8)',
+      confirmButtonColor: '#ff6b9d',
+      cancelButtonColor: '#95a5a6',
+      showClass: {
+        popup: 'animate__animated animate__fadeInUp animate__faster',
+        backdrop: 'animate__animated animate__fadeIn animate__faster'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutDown animate__faster',
+        backdrop: 'animate__animated animate__fadeOut animate__faster'
+      },
+      allowEscapeKey: true,
+      allowOutsideClick: false,
+      customClass: {
+        popup: 'custom-swal-popup',
+        title: 'custom-swal-title',
+        htmlContainer: 'custom-swal-html',
+        confirmButton: 'custom-swal-confirm',
+        cancelButton: 'custom-swal-cancel'
+      }
+    };
+
+    // Crear partículas mejoradas
+    function createParticle() {
+      const particles = ['bubble', 'heart', 'star'];
+      const particleType = particles[Math.floor(Math.random() * particles.length)];
       
-      const size = Math.random() * 60 + 20;
-      bubble.style.width = size + 'px';
-      bubble.style.height = size + 'px';
-      bubble.style.left = Math.random() * window.innerWidth + 'px';
-      bubble.style.bottom = '-100px';
+      const particle = document.createElement('div');
+      particle.classList.add('particle', particleType);
       
-      const duration = Math.random() * 3 + 3;
-      bubble.style.animationDuration = duration + 's';
+      if (particleType === 'bubble') {
+        const size = Math.random() * 80 + 30;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+      } else if (particleType === 'heart') {
+        particle.innerHTML = ['💖', '💕', '💗', '💓'][Math.floor(Math.random() * 4)];
+      } else {
+        particle.innerHTML = ['✨', '⭐', '🌟', '💫'][Math.floor(Math.random() * 4)];
+      }
+      
+      particle.style.left = Math.random() * window.innerWidth + 'px';
+      particle.style.bottom = '-100px';
+      
+      const duration = Math.random() * 4 + 6;
+      particle.style.animationDuration = duration + 's';
       
       const delay = Math.random() * 2;
-      bubble.style.animationDelay = delay + 's';
+      particle.style.animationDelay = delay + 's';
       
-      document.body.appendChild(bubble);
+      document.body.appendChild(particle);
       
       setTimeout(() => {
-        if (bubble.parentNode) {
-          bubble.parentNode.removeChild(bubble);
+        if (particle.parentNode) {
+          particle.parentNode.removeChild(particle);
         }
       }, (duration + delay) * 1000);
     }
 
-    // Crear burbujas cada 800ms
-    setInterval(createBubble, 800);
+    // Crear partículas cada 600ms
+    setInterval(createParticle, 600);
 
     // Variables principales
     const startBtn = document.getElementById('startBtn');
@@ -419,26 +707,50 @@
     const preview = document.getElementById('preview');
     const loading = document.getElementById('loading');
     
-    // Definir URL de la API (aquí puedes poner tu URL real)
-    const urlApi = 'https://api-save-image-qr-production.up.railway.app/api/upload'; // Cambia por tu URL real
+    // URL de la API
+    const urlApi = 'https://api-save-image-qr-production.up.railway.app/api/upload';
     
     let currentStream = null;
     let currentFacing = 'user';
 
-    // Configuración de SweetAlert más pequeña
-    const swalConfig = {
-      width: 320,
-      padding: '20px',
-      background: 'rgba(255, 255, 255, 0.95)',
-      backdrop: 'rgba(0, 0, 0, 0.4)',
-      confirmButtonColor: '#ff6b6b',
-      cancelButtonColor: '#95a5a6'
-    };
+    // Función para mostrar alertas optimizadas
+    async function showAlert(type, title, text, options = {}) {
+      const icons = {
+        success: '🎉',
+        error: '😔',
+        warning: '⚠️',
+        info: 'ℹ️',
+        question: '🤔'
+      };
 
-    // Iniciar cámara
+      const config = {
+        ...swalConfig,
+        title: `${icons[type] || ''} ${title}`,
+        text: text,
+        icon: type,
+        ...options
+      };
+
+      // Para móviles, ajustar el tamaño
+      if (window.innerWidth <= 480) {
+        config.width = 280;
+        config.padding = '20px';
+      }
+
+      return await Swal.fire(config);
+    }
+
+    // Iniciar cámara con mejor manejo de errores
     async function startCamera(facingMode = 'user') {
       try {
         console.log('🎥 Iniciando cámara con modo:', facingMode);
+        
+        // Deshabilitar botón mientras se inicia
+        startBtn.disabled = true;
+        startBtn.innerHTML = `
+          <div style="width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-top: 2px solid white; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+          Iniciando...
+        `;
         
         // Detener stream anterior si existe
         if (currentStream) {
@@ -447,14 +759,19 @@
         }
 
         console.log('📱 Solicitando permisos de cámara...');
-        const stream = await navigator.mediaDevices.getUserMedia({
+        
+        // Configuración optimizada para móviles
+        const constraints = {
           video: { 
             facingMode: { ideal: facingMode },
-            width: { ideal: 1200 },
-            height: { ideal: 800 }
+            width: { ideal: 1280, max: 1920 },
+            height: { ideal: 720, max: 1080 },
+            frameRate: { ideal: 30, max: 60 }
           },
           audio: false
-        });
+        };
+
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
         console.log('✅ Stream obtenido exitosamente');
         currentStream = stream;
@@ -472,64 +789,133 @@
 
         console.log('🎬 Cámara iniciada correctamente');
 
+        // Mostrar mensaje de éxito
+        await showAlert('success', '¡Perfecto!', 'Cámara iniciada correctamente ✨', {
+          timer: 2000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
+
       } catch (err) {
         console.error('❌ Error al iniciar cámara:', err);
         console.error('📋 Detalles del error:', err.name, err.message);
         
+        // Restaurar botón
+        startBtn.disabled = false;
+        startBtn.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+            <path d="M12 9a3 3 0 100 6 3 3 0 000-6z"/>
+            <path fill-rule="evenodd" d="M9.828 4a3 3 0 012.121.879l.95.95h3.1A2 2 0 0118 7.828v8.344a2 2 0 01-1.999 2h-8.002A2 2 0 016 16.172V7.828A2 2 0 017.828 6h3.1l.95-.95A3 3 0 019.828 4zM12 15a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+          </svg>
+          Iniciar Cámara
+        `;
+        
+        let errorTitle = "Error de cámara";
         let errorMessage = "No se pudo acceder a la cámara";
+        let suggestions = [];
+
         if (err.name === 'NotAllowedError') {
-          errorMessage = "Permite el acceso a la cámara para continuar";
+          errorTitle = "Permisos necesarios";
+          errorMessage = "Necesitamos acceso a tu cámara para tomar fotos increíbles";
+          suggestions = [
+            "• Permite el acceso a la cámara en tu navegador",
+            "• Revisa la configuración de permisos",
+            "• Intenta recargar la página"
+          ];
         } else if (err.name === 'NotFoundError') {
-          errorMessage = "No se encontró cámara en tu dispositivo";
+          errorTitle = "Cámara no encontrada";
+          errorMessage = "No se encontró ninguna cámara en tu dispositivo";
+          suggestions = [
+            "• Verifica que tu dispositivo tenga cámara",
+            "• Conecta una cámara externa si es necesario",
+            "• Reinicia tu dispositivo"
+          ];
+        } else if (err.name === 'NotReadableError') {
+          errorTitle = "Cámara ocupada";
+          errorMessage = "La cámara está siendo usada por otra aplicación";
+          suggestions = [
+            "• Cierra otras apps que usen la cámara",
+            "• Reinicia tu navegador",
+            "• Intenta de nuevo en unos momentos"
+          ];
         }
 
-        // Usar alert como fallback si SweetAlert no está disponible
-        if (typeof Swal !== 'undefined') {
-          await Swal.fire({
-            ...swalConfig,
-            title: "Error de cámara",
-            text: errorMessage,
-            icon: 'error',
-            confirmButtonText: 'Entendido'
-          });
-        } else {
-          alert(errorMessage);
-        }
+        await showAlert('error', errorTitle, `${errorMessage}\n\n${suggestions.join('\n')}`, {
+          confirmButtonText: 'Entendido',
+          allowOutsideClick: true
+        });
       }
     }
 
-    // Tomar foto
+    // Tomar foto con efectos mejorados
     async function takePhoto() {
       try {
-        // Mostrar alerta de confirmación más pequeña (con fallback)
-        let shouldProceed = true;
-        
-        if (typeof Swal !== 'undefined') {
-          const result = await Swal.fire({
-            ...swalConfig,
-            title: '📸 ¡Sonríe!',
-            text: '¿Lista para tomar la foto?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: '¡Sí! ✨',
-            cancelButtonText: 'Espera'
-          });
-          shouldProceed = result.isConfirmed;
-        } else {
-          shouldProceed = confirm('📸 ¡Sonríe! ¿Lista para tomar la foto?');
-        }
+        // Mostrar alerta de confirmación con countdown
+        let timerInterval;
+        const result = await showAlert('question', '¡Sonríe!', '¿Lista para tomar la foto?', {
+          html: `
+            <div style="text-align: center; margin: 20px 0;">
+              <div style="font-size: 3rem; margin: 10px 0;">📸</div>
+              <p style="font-size: 1.1rem; color: #667eea; margin: 10px 0;">
+                ¡Prepárate para brillar! ✨
+              </p>
+            </div>
+          `,
+          showCancelButton: true,
+          confirmButtonText: '¡Sí, vamos! 🌟',
+          cancelButtonText: 'Espera un momento',
+          reverseButtons: true,
+          focusConfirm: true
+        });
 
-        if (!shouldProceed) return;
+        if (!result.isConfirmed) return;
+
+        // Countdown visual antes de tomar la foto
+        for (let i = 3; i > 0; i--) {
+          await showAlert('info', `¡${i}!`, 'Prepárate...', {
+            timer: 1000,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            html: `
+              <div style="text-align: center;">
+                <div style="font-size: 4rem; color: #ff6b9d; font-weight: bold; animation: pulse 0.5s ease-in-out;">${i}</div>
+                <p style="font-size: 1.2rem; color: #667eea; margin-top: 10px;">¡Sonríe! 😄</p>
+              </div>
+            `
+          });
+        }
 
         console.log('📷 Tomando foto...');
         
-        // Tomar la foto
+        // Efecto visual de flash
+        const flash = document.createElement('div');
+        flash.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: white;
+          z-index: 9999;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.1s;
+        `;
+        document.body.appendChild(flash);
+        flash.style.opacity = '0.8';
+        setTimeout(() => {
+          flash.style.opacity = '0';
+          setTimeout(() => flash.remove(), 100);
+        }, 150);
+
+        // Capturar la foto
         const context = canvas.getContext('2d');
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
         preview.src = dataUrl;
         preview.style.display = 'block';
 
@@ -542,32 +928,56 @@
         cameraSelector.style.display = 'none';
         startBtn.style.display = 'flex';
 
-        // Mostrar loading para subida
+        // Mostrar loading con animación mejorada
         loading.style.display = 'block';
 
-        // Alerta de guardado
-        if (typeof Swal !== 'undefined') {
-          Swal.fire({
-            ...swalConfig,
-            title: 'Guardando...',
-            html: 'Tu foto se está guardando ✨',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            didOpen: () => {
-              Swal.showLoading();
+        // Mostrar alerta de guardado
+        showAlert('info', 'Guardando...', 'Tu foto se está guardando en la nube ✨', {
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          html: `
+            <div style="text-align: center; margin: 20px 0;">
+              <div style="width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #ff6b9d; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px;"></div>
+              <p style="color: #667eea; font-size: 1.1rem;">Procesando tu momento mágico...</p>
+            </div>
+          `,
+          didOpen: () => {
+            // Agregar estilos de animación si no existen
+            if (!document.getElementById('spinStyle')) {
+              const style = document.createElement('style');
+              style.id = 'spinStyle';
+              style.textContent = `
+                @keyframes spin {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(360deg); }
+                }
+                @keyframes pulse {
+                  0%, 100% { transform: scale(1); }
+                  50% { transform: scale(1.1); }
+                }
+              `;
+              document.head.appendChild(style);
             }
-          });
-        }
+          }
+        });
 
         console.log('📤 Enviando imagen al servidor...');
+
+        // Simular delay de red para mejor UX
+        await new Promise(resolve => setTimeout(resolve, 1500));
 
         // Enviar al backend
         const response = await fetch(urlApi, {
           method: 'POST',
           headers: { 
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
           },
-          body: JSON.stringify({ image: dataUrl })
+          body: JSON.stringify({ 
+            image: dataUrl,
+            timestamp: new Date().toISOString(),
+            device: navigator.userAgent.includes('Mobile') ? 'mobile' : 'desktop'
+          })
         });
 
         loading.style.display = 'none';
@@ -580,19 +990,38 @@
         console.log('✅ Respuesta exitosa:', data);
 
         if (data.success) {
-          if (typeof Swal !== 'undefined') {
-            await Swal.fire({
-              ...swalConfig,
-              title: '🎉 ¡Perfecto!',
-              text: 'Tu foto se guardó exitosamente ✨',
-              icon: 'success',
-              confirmButtonText: '¡Genial! 💖'
-            });
-          } else {
-            alert('🎉 ¡Perfecto! Tu foto se guardó exitosamente ✨');
+          // Cerrar loading alert
+          Swal.close();
+          
+          // Mostrar éxito con confetti
+          await showAlert('success', '¡Increíble!', 'Tu foto se guardó perfectamente', {
+            html: `
+              <div style="text-align: center; margin: 20px 0;">
+                <div style="font-size: 4rem; margin: 15px 0;">🎉</div>
+                <p style="font-size: 1.2rem; color: #4ecdc4; font-weight: 600; margin: 10px 0;">
+                  ¡Tu momento mágico está guardado! ✨
+                </p>
+                <p style="color: #666; font-size: 0.9rem; margin: 10px 0;">
+                  ${data.message || 'Foto guardada en la galería de recuerdos'}
+                </p>
+              </div>
+            `,
+            confirmButtonText: '¡Genial! 💖',
+            allowOutsideClick: true,
+            timer: 4000
+          });
+          
+          // Ocultar preview después de un momento
+          setTimeout(() => {
+            preview.style.display = 'none';
+          }, 2000);
+
+          // Crear más partículas de celebración
+          for (let i = 0; i < 10; i++) {
+            setTimeout(() => createParticle(), i * 100);
           }
         } else {
-          throw new Error(data.error || "Error desconocido");
+          throw new Error(data.error || "Error desconocido del servidor");
         }
 
       } catch (err) {
@@ -607,68 +1036,91 @@
           currentStream.getTracks().forEach(track => track.stop());
         }
 
+        // Cerrar cualquier alert abierto
+        Swal.close();
+
         console.error('❌ Error:', err);
         
-        let errorMessage = "Hubo un problema al guardar";
+        let errorTitle = "Oops, algo salió mal";
+        let errorMessage = "Hubo un problema al guardar tu foto";
+        let suggestions = [];
+
         if (err.message.includes('HTTP')) {
-          errorMessage = "Error de conexión. Revisa tu internet";
+          errorTitle = "Error de conexión";
+          errorMessage = "No se pudo conectar con el servidor";
+          suggestions = [
+            "• Verifica tu conexión a internet",
+            "• Intenta de nuevo en unos momentos",
+            "• Contacta al soporte si persiste"
+          ];
+        } else if (err.message.includes('Failed to fetch')) {
+          errorTitle = "Sin conexión";
+          errorMessage = "No hay conexión a internet";
+          suggestions = [
+            "• Revisa tu conexión WiFi o datos móviles",
+            "• Intenta cambiar de red",
+            "• Espera a tener mejor señal"
+          ];
         }
 
-        if (typeof Swal !== 'undefined') {
-          await Swal.fire({
-            ...swalConfig,
-            title: "Error",
-            text: errorMessage,
-            icon: 'error',
-            confirmButtonText: 'Entendido'
-          });
-        } else {
-          alert(errorMessage);
-        }
+        await showAlert('error', errorTitle, `${errorMessage}\n\n${suggestions.join('\n')}`, {
+          confirmButtonText: 'Intentar de nuevo',
+          allowOutsideClick: true,
+          html: `
+            <div style="text-align: center; margin: 20px 0;">
+              <div style="font-size: 3rem; margin: 15px 0;">😔</div>
+              <p style="font-size: 1.1rem; color: #ff6b6b; font-weight: 600; margin: 10px 0;">
+                ${errorMessage}
+              </p>
+              <div style="text-align: left; margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+                <p style="font-weight: 600; margin-bottom: 8px; color: #333;">💡 Sugerencias:</p>
+                ${suggestions.map(s => `<p style="margin: 4px 0; color: #666; font-size: 0.9rem;">${s}</p>`).join('')}
+              </div>
+            </div>
+          `
+        });
       }
     }
 
-    // Event listeners - Esperamos a que la página se cargue completamente
+    // Event listeners optimizados
     document.addEventListener('DOMContentLoaded', function() {
       console.log('🚀 Página cargada, configurando event listeners...');
       
       // Event listener para el botón de iniciar
       startBtn.addEventListener('click', async (e) => {
-        e.preventDefault(); // Prevenir comportamiento por defecto
+        e.preventDefault();
         try {
           console.log('🎬 Botón iniciar cámara presionado...');
           
-          // Comprobar si SweetAlert está disponible
-          if (typeof Swal !== 'undefined') {
-            const result = await Swal.fire({
-              ...swalConfig,
-              title: '📸 ¡Hora de brillar!',
-              text: '¿Lista para la sesión de fotos?',
-              icon: 'question',
-              showCancelButton: true,
-              confirmButtonText: '¡Vamos! ✨',
-              cancelButtonText: 'Después'
-            });
+          const result = await showAlert('question', '¡Hora de brillar!', '¿Lista para la sesión de fotos?', {
+            html: `
+              <div style="text-align: center; margin: 20px 0;">
+                <div style="font-size: 3.5rem; margin: 15px 0;">✨</div>
+                <p style="font-size: 1.2rem; color: #667eea; font-weight: 600; margin: 10px 0;">
+                  ¡Vamos a capturar momentos increíbles!
+                </p>
+                <p style="color: #666; font-size: 0.95rem; margin: 10px 0;">
+                  Tu cámara se activará para tomar fotos espectaculares
+                </p>
+              </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: '¡Vamos! 🎉',
+            cancelButtonText: 'Después',
+            reverseButtons: true,
+            focusConfirm: true
+          });
 
-            console.log('🤔 Resultado de la alerta:', result);
+          console.log('🤔 Resultado de la alerta:', result);
 
-            if (result.isConfirmed) {
-              console.log('✅ Usuario confirmó, iniciando cámara...');
-              await startCamera(currentFacing);
-            } else {
-              console.log('❌ Usuario canceló');
-            }
+          if (result.isConfirmed) {
+            console.log('✅ Usuario confirmó, iniciando cámara...');
+            await startCamera(currentFacing);
           } else {
-            // Fallback si SweetAlert no está disponible
-            console.log('⚠️ SweetAlert no disponible, usando confirm nativo');
-            const confirmed = confirm('📸 ¡Hora de brillar! ¿Lista para la sesión de fotos?');
-            if (confirmed) {
-              await startCamera(currentFacing);
-            }
+            console.log('❌ Usuario canceló');
           }
         } catch (error) {
           console.error('❌ Error en startBtn click:', error);
-          // Si todo falla, intentar iniciar cámara directamente
           await startCamera(currentFacing);
         }
       });
@@ -679,35 +1131,102 @@
         takePhoto();
       });
 
-      // Selector de cámara
+      // Selector de cámara mejorado
       document.querySelectorAll('.camera-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', async (e) => {
           e.preventDefault();
           const facing = btn.dataset.facing;
           if (facing !== currentFacing) {
-            startCamera(facing);
+            // Mostrar loading mientras cambia
+            btn.innerHTML = '<div style="width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top: 2px solid white; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>';
+            btn.disabled = true;
+            
+            await startCamera(facing);
+            
+            // Restaurar botón
+            btn.disabled = false;
+            btn.innerHTML = facing === 'user' ? '📱 Cámara Frontal' : '📷 Cámara Trasera';
           }
         });
       });
 
-      // Efectos de hover
+      // Efectos de hover mejorados
       startBtn.addEventListener('mouseenter', () => {
-        for (let i = 0; i < 3; i++) {
-          setTimeout(() => createBubble(), i * 200);
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => createParticle(), i * 100);
         }
       });
 
       captureBtn.addEventListener('mouseenter', () => {
-        for (let i = 0; i < 2; i++) {
-          setTimeout(() => createBubble(), i * 150);
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => createParticle(), i * 150);
+        }
+      });
+
+      // Prevenir zoom en iOS
+      document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+      });
+
+      // Manejar orientación en móviles
+      window.addEventListener('orientationchange', function() {
+        setTimeout(() => {
+          // Reiniciar cámara si está activa
+          if (currentStream && video.style.display === 'block') {
+            startCamera(currentFacing);
+          }
+        }, 500);
+      });
+
+      // Manejar visibilidad de página
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden && currentStream) {
+          // Pausar stream cuando la página no es visible
+          currentStream.getTracks().forEach(track => {
+            track.enabled = false;
+          });
+        } else if (!document.hidden && currentStream) {
+          // Reanudar stream cuando la página es visible
+          currentStream.getTracks().forEach(track => {
+            track.enabled = true;
+          });
         }
       });
 
       console.log('✅ Event listeners configurados correctamente');
     });
 
-    // Log adicional para debugging
-    console.log('🔧 Script cargado, esperando DOM...');
+    // Funciones de utilidad
+    function showToast(message, type = 'success') {
+      const icons = {
+        success: '✅',
+        error: '❌',
+        warning: '⚠️',
+        info: 'ℹ️'
+      };
+
+      showAlert(type, '', message, {
+        toast: true,
+        position: 'top-end',
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        html: `<div style="display: flex; align-items: center; gap: 10px;">
+                 <span style="font-size: 1.5rem;">${icons[type]}</span>
+                 <span>${message}</span>
+               </div>`
+      });
+    }
+
+    // Log de inicialización
+    console.log('🔧 Script cargado y optimizado, esperando DOM...');
+    
+    // Crear partículas iniciales
+    setTimeout(() => {
+      for (let i = 0; i < 8; i++) {
+        setTimeout(() => createParticle(), i * 200);
+      }
+    }, 1000);
   </script>
 </body>
 </html>
